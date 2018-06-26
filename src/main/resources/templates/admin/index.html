@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+  layout:decorate="~{admin/layout}">
+<head>
+    <title>Painel</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-3">
+        <section th:replace="~{/admin/fragments/mainsidebar :: mainsidebar}"></section>
+      </div>
+      <div class="col-md-9">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Painel</li>
+          </ol>
+        </nav>
+
+        <!--Conteúdo-->
+      </div>
+    </div>
+  </div>
+      
+</div>
+</body>
+</html>

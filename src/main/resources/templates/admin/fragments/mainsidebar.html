@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt" 
+  xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:th="http://www.thymeleaf.org">
+<section th:fragment="mainsidebar">
+    <div class="card">
+        <article class="card-group-item">
+            <header class="card-header">
+                <h6 class="title">MENU</h6>
+            </header>
+            <div class="filter-content">
+                <div class="list-group list-group-flush">
+                    <a th:href="@{/admin/produtos}" class="list-group-item">
+                        <i class="fa fa-list-alt"></i> Produtos
+                    </a>
+                    <a th:href="@{/admin/produtos/add}" class="list-group-item">
+                        <i class="fa fa-edit"></i> Adicionar Produtos </a>
+                    <a th:href="@{/admin/pedidos}" class="list-group-item">
+                        <i class="fa fa-shopping-bag"></i> Pedidos
+                    </a>
+                    <a th:href="@{/admin/usuarios}" class="list-group-item">
+                        <i class="fa fa-users"></i> Usuários
+                    </a>
+                </div>
+            </div>
+        </article>
+        <article class="card-group-item">
+            <header class="card-header">
+                <h6 class="title">SITE</h6>
+            </header>
+            <div class="card-body">
+                <a th:href="@{/}" target="_blank" class="btn btn-primary btn-block">
+                    <i class="fa fa-eye"></i> Ver site</a>
+            </div>
+        </article>
+    </div>
+</section>
+</html>

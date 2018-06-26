@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{site/layout}">
+<head>
+    <title>Home</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+	<div class="container mt-4">
+		<h4 class="title-text">Novos produtos</h4>
+		<div class="slick-slider" data-slick='{"slidesToShow": 5, "slidesToScroll": 1}'>
+			<div class="item-slide p-2" th:each="produto : ${new_produtos}">
+				<figure class="card card-product">
+					<span class="badge-new"> NOVO </span>
+					<div class="img-wrap p-3">
+						<img th:src="@{imagens/{nome}(nome = ${produto.imagem})}"> </div>
+					<figcaption class="info-wrap text-center">
+						<h6 class="title text-truncate">
+							<a th:href="@{/produto/{id}(id = ${produto.id})}" th:text="${produto.nome}"></a>
+						</h6>
+					</figcaption>
+				</figure>
+			</div>
+		</div>
+
+		<div class="alert alert-secondary" th:if="${#lists.isEmpty(new_produtos)}">
+			<div>
+				<i class="fa fa-info-circle"></i> Nenhum produto cadastrado!
+			</div>
+		</div>
+	</div>
+
+	<section class="section-content">
+		<div class="container">
+			<h4 class="title-text">Produtos em Destaque</h4>
+			<div class="row">
+				<main class="col-sm-12">
+					<article class="card card-product" th:each="produto : ${produtos}">
+						<div class="card-body">
+							<div class="row">
+								<aside class="col-sm-3">
+									<div class="img-wrap">
+										<img th:src="@{imagens/{nome}(nome = ${produto.imagem})}">
+									</div>
+								</aside>
+								<article class="col-sm-6">
+									<h4 class="title" th:text="${produto.nome}"></h4>
+									<div class="rating-wrap  mb-2">
+										<ul class="rating-stars">
+											<li style="width:80%" class="stars-active">
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+											</li>
+											<li>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+											</li>
+										</ul>
+										<div class="label-rating">132 vizualizações</div>
+										<div class="label-rating">154 compras </div>
+									</div>
+								</article>
+								<aside class="col-sm-3 border-left">
+									<div class="action-wrap">
+										<div class="price-wrap h4">
+											<span class="price text-success">R$ [[${#numbers.formatDecimal(produto.preco, 0, 'POINT', 2, 'COMMA')}]]</span>
+										</div>
+										<br>
+										<p>
+											<a th:href="@{/carrinho/add/{id}(id = ${produto.id})}" class="btn btn-primary btn-block">
+												<i class="fa fa-shopping-cart"></i> Adicionar ao carrinho </a>
+											<br>
+											<a th:href="@{/produto/{id}(id = ${produto.id})}" class="btn btn-secondary btn-block">
+												<i class="fa fa-eye"></i> Detalhes</a>
+										</p>
+									</div>
+								</aside>
+							</div>
+						</div>
+					</article>
+					<div class="alert alert-secondary" th:if="${#lists.isEmpty(new_produtos)}">
+						<div>
+							<i class="fa fa-info-circle"></i> Nenhum produto cadastrado!
+						</div>
+					</div>
+				</main>
+			</div>
+
+			<div class="text-center" th:if="${not #lists.isEmpty(new_produtos)}">
+				<a href="" class="btn btn-lg btn-outline-info">
+					<i class="fa fa-plus-circle"></i> Carregar mais produtos
+				</a>
+			</div>
+		</div>
+	</section>
+</div>
+</body>
+
+</html>

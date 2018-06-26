@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{site/layout}">
+<head>
+    <title>Home</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <section class="section-content bg padding-y border-top">
+        <div class="container">
+            <div class="row">
+                <main class="col-sm-9">
+                    <div class="card">
+                        <table class="table table-hover shopping-cart-wrap">
+                            <thead class="text-muted">
+                                <tr>
+                                    <th scope="col">Produto</th>
+                                    <th scope="col" width="130">Quantidade</th>
+                                    <th scope="col" width="130">Preço</th>
+                                    <th scope="col" width="120">Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="produto : ${produtos}">
+                                    <td>
+                                        <figure class="media">
+                                            <div class="img-wrap">
+                                                <img th:src="@{imagens/{nome}(nome = ${produto.imagem})}" class="img-thumbnail img-sm">
+                                            </div>
+                                            <figcaption class="media-body">
+                                                <h6 class="title" th:text="${produto.nome}"></h6>
+
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    <td>1</td>
+                                    <td>
+                                        <div class="price-wrap">
+                                            <var class="price">R$ [[${#numbers.formatDecimal(produto.preco, 0, 'POINT', 2, 'COMMA')}]]</var>
+                                            <small class="text-muted">(reais)</small>
+                                        </div>
+                                    </td>
+                                    <td class="text-right">
+                                        <a href="" class="btn btn-outline-danger"> × Remover</a>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(produtos)}">
+                                    <td colspan="4" class="text-center"><i class="fa fa-info-circle"></i> Carrinho vazio!</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </main>
+                <aside class="col-sm-3">
+                    <p class="alert alert-success text-center" th:if="not ${#strings.isEmpty(mensagem)}">
+                        <i class="fa fa-check-circle"></i> [[${mensagem}]] </p>
+                    <p class="h5">Resultado do Pedido</p>
+                    <dl class="dlist-align">
+                        <dt>Produtos: </dt>
+                        <dd class="text-right" th:text="${session.quantidade}">1</dd>
+                    </dl>
+                    <dl class="dlist-align">
+                        <dt>Frete: </dt>
+                        <dd class="text-right">-</dd>
+                    </dl>
+                    <hr>
+                    <dl class="dlist-align h5">
+                        <dt>Total:</dt>
+                        <dd class="text-right">
+                            <strong>R$ [[${#numbers.formatDecimal(valorTotal, 0, 'POINT', 2, 'COMMA')}]]</strong>
+                        </dd>
+                    </dl>
+                    <hr>
+                    <a href="" class="btn btn-success btn-lg btn-block">
+                        <i class="fa fa-shopping-bag"></i> Finalizar pedido</a>
+                </aside>
+            </div>
+
+        </div>
+    </section>
+</div>
+</body>
+</html>
