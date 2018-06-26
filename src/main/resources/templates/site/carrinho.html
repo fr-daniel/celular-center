@@ -42,7 +42,7 @@
                                         </div>
                                     </td>
                                     <td class="text-right">
-                                        <a href="" class="btn btn-outline-danger"> × Remover</a>
+                                        <a th:href="@{/carrinho/rm/{id}(id = ${produto.id})}" class="btn btn-outline-danger"> <i class="fa fa-trash"></i> Remover</a>
                                     </td>
                                 </tr>
                                 <tr th:if="${#lists.isEmpty(produtos)}">

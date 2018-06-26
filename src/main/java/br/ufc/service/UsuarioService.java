@@ -1,5 +1,6 @@
 package br.ufc.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,7 +9,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.caelum.stella.format.CPFFormatter;
+import br.ufc.model.Grupo;
 import br.ufc.model.Usuario;
+import br.ufc.repository.GrupoRepository;
 import br.ufc.repository.UsuarioRepository;
 import br.ufc.service.exception.CpfUsuarioJaCadastradoException;
 import br.ufc.service.exception.EmailUsuarioJaCadastradoException;
@@ -18,6 +21,8 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired GrupoRepository grupoRepository;
 
     @Autowired 
     private PasswordEncoder passwordEncoder;
@@ -39,7 +44,10 @@ public class UsuarioService {
 			throw new CpfUsuarioJaCadastradoException("CPF já cadastrado");
 		
 		usuario.setSenha(this.passwordEncoder.encode(usuario.getSenha()));
-				
+        
+        Grupo userRole = grupoRepository.findByCodigoIgnoreCase("ROLE_USER").get();
+        usuario.setGrupos(Arrays.asList(userRole));
+
 		return usuarioRepository.save(usuario);
     }
 

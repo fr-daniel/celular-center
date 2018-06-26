@@ -37,7 +37,7 @@ public class CarrinhoController {
 
     @GetMapping("/rm/{idProduto}")
 	public String rmProduto(@PathVariable("idProduto") Produto produto, RedirectAttributes attributes) {
-        carrinho.add(produto);
+        carrinho.remove(produto);
         attributes.addFlashAttribute("mensagem", "Produto removido com sucesso!");
         return "redirect:/carrinho";
     }
