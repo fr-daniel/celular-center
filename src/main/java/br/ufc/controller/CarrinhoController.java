@@ -17,7 +17,7 @@ import br.ufc.session.Carrinho;
 public class CarrinhoController {
 
     @Autowired
-    Carrinho carrinho;
+    private Carrinho carrinho;
 
     @GetMapping
     public ModelAndView carrinho() {
@@ -29,9 +29,16 @@ public class CarrinhoController {
     }
 
     @GetMapping("/add/{idProduto}")
-	public String addAutor(@PathVariable("idProduto") Produto produto, RedirectAttributes attributes) {
+	public String addProduto(@PathVariable("idProduto") Produto produto, RedirectAttributes attributes) {
         carrinho.add(produto);
         attributes.addFlashAttribute("mensagem", "Produto adicionado com sucesso!");
+        return "redirect:/carrinho";
+    }
+
+    @GetMapping("/rm/{idProduto}")
+	public String rmProduto(@PathVariable("idProduto") Produto produto, RedirectAttributes attributes) {
+        carrinho.add(produto);
+        attributes.addFlashAttribute("mensagem", "Produto removido com sucesso!");
         return "redirect:/carrinho";
     }
     
