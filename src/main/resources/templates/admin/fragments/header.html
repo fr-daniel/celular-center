@@ -20,17 +20,17 @@
           </div>
           <div class="text-wrap dropdown">
             <a href="#" class="text-white" data-toggle="dropdown" data-offset="20,10" aria-expanded="false">
-              [[${#authentication.principal.usuario.nome}]]
+              [[${#authentication.getPrincipal().getNome()}]]
               <i class="fa fa-caret-down"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right" style="position: absolute; top: 35px; left: -35px;" x-placement="bottom-end">
               <a class="dropdown-item" th:href="@{/logout}">
-                <i class="fa fa-sign-out-alt"></i> Sair</a>
+                <i class="fa fa-sign-out-alt"></i> Sair
+              </a>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </nav>
 </header>

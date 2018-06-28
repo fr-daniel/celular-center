@@ -14,7 +14,6 @@
     <link th:href="@{/plugins/bootstrap-ecommerce/plugins/slickslider/slick.css}" rel="stylesheet" type="text/css" />
 	<link th:href="@{/plugins/bootstrap-ecommerce/plugins/slickslider/slick-theme.css}" rel="stylesheet" type="text/css" />
 
-    <!-- custom style -->
     <link th:href="@{/plugins/bootstrap-ecommerce/css/uikit.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/plugins/bootstrap-ecommerce/css/responsive.css}" rel="stylesheet" media="only screen and (max-width: 1200px)" />
    
@@ -24,10 +23,9 @@
 </head>
 <body> 
    
-        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-        <input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}"/>
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+    <input type="hidden" name="_csrf_header" th:value="${_csrf.headerName}"/>
 
-        
     <header th:replace="~{/site/fragments/header :: header}"></header>
 
     <div layout:fragment="content"></div>

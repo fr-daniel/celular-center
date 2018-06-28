@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{/admin/layout}">
+<head>
+    <title>Usuário</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <section th:replace="~{/admin/fragments/mainsidebar :: mainsidebar}"></section>
+                </div>
+                <div class="col-md-9">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a th:href="@{/admin}">Painel</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a th:href="@{/admin/usuarios}">Usuários</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">[[${usuario.nome}]]</li>
+                        </ol>
+                    </nav>
+
+                    <form th:action="@{/admin/usuarios/atualizar}" th:object="${usuario}" method="POST">
+                        <section th:replace="~{/admin/fragments/mensagem-erro-validacao :: mensagemValidacao}"></section>
+
+                        <input type="hidden" class="form-control" th:field="*{codigo}" id="id" />
+
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="nome">Nome</label>
+                                <input type="text" class="form-control" th:field="*{nome}" id="nome" />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="nome">CPF</label>
+                                <input type="text" class="form-control" th:field="*{cpf}" id="cpf" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="nome">Email</label>
+                                <input type="text" class="form-control" th:field="*{email}" id="email" />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="nome">Data Nascimento</label>
+                                <input type="text" class="form-control" th:field="*{dataNascimento}" id="dataNascimento" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="nome">Senha</label>
+                                <input type="password" class="form-control" th:field="*{senha}" id="senha" />
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Atualizar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block layout:fragment="bloco-js">
+        <script th:src="@{/plugins/input-mask/jquery.inputmask.js}"></script>
+        <script th:src="@{/plugins/input-mask/jquery.inputmask.date.extensions.js}"></script>
+        <script>
+            $('#cpf').inputmask("999.999.999-99");
+            $('#dataNascimento').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+        </script>
+    </th:block>
+</body>
+</html>

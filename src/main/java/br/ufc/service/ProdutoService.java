@@ -25,7 +25,6 @@ public class ProdutoService {
         String foto = storageService.store(imagem);
         produto.setImagem(foto);
         produtoRepository.save(produto);
-
         return produto;
     }
 
@@ -39,11 +38,19 @@ public class ProdutoService {
     } 
     
     public List<Produto> destaques() {
-        Pageable limit = new PageRequest(0,3);
+        Pageable limit = new PageRequest(0, 3);
         return produtoRepository.findAll(limit).getContent();
     }
 
     public List<Produto> buscarUltimos() {
-        return produtoRepository.findTop10ByOrderByCreatedDesc();
+        return produtoRepository.findTop10ByOrderByIdDesc();
+    }
+
+    public void deletar(Produto produto) {
+        produtoRepository.delete(produto);
+    }
+
+    public Long total() {
+        return produtoRepository.count();
     }
 }

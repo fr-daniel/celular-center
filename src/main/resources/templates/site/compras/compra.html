@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{site/layout}">
+
+<head>
+    <title>Detalhes Compras</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="container mt-3">
+            <h4 class="title-text">Detalhes da compra</h4>
+            <table class="table  table-hover">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Quantidade de Produtos</th>
+                        <th>Valor Total</th>
+                        <th>Data e Hora</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td th:text="${compra.id}"></td>
+                        <td th:text="${compra.quantidadeProdutos}"></td>
+                        <td>R$ [[${#numbers.formatDecimal(compra.total, 0, 'POINT', 2, 'COMMA')}]]</td>
+                        <td>[[${#temporals.format(compra.created, 'dd/MM/yyyy - HH:mm')}]]</td>
+                    </tr>
+                    <tr th:if="${compra == null}">
+                        <td colspan="4">Nenhum compra encontrada!</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <h5 class="title-text">Produtos da Compras</h5>
+            <table class="table  table-hover">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Produto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="produto : ${compra.produtos}">
+                        <td th:text="${produto.id}"></td>
+                        <td th:text="${produto.nome}"></td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(compra.produtos)}">
+                        <td colspan="2">Nenhum produto encontrado!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

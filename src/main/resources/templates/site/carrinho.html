@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html 
-	xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	layout:decorate="~{site/layout}">
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{site/layout}"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Home</title>
 </head>
@@ -54,11 +56,12 @@
                 </main>
                 <aside class="col-sm-3">
                     <p class="alert alert-success text-center" th:if="not ${#strings.isEmpty(mensagem)}">
-                        <i class="fa fa-check-circle"></i> [[${mensagem}]] </p>
+                        <i class="fa fa-check-circle"></i> [[${mensagem}]] 
+                    </p>
                     <p class="h5">Resultado do Pedido</p>
                     <dl class="dlist-align">
                         <dt>Produtos: </dt>
-                        <dd class="text-right" th:text="${session.quantidade}">1</dd>
+                        <dd class="text-right" th:text="${quantidade}"></dd>
                     </dl>
                     <dl class="dlist-align">
                         <dt>Frete: </dt>
@@ -72,8 +75,15 @@
                         </dd>
                     </dl>
                     <hr>
-                    <a href="" class="btn btn-success btn-lg btn-block">
+                    <div sec:authorize="hasRole('ROLE_USER')">
+                    <a th:href="@{/user/carrinho/comprar}" class="btn btn-success btn-lg btn-block">
                         <i class="fa fa-shopping-bag"></i> Finalizar pedido</a>
+                    </div>
+                    <div sec:authorize="isAnonymous()">
+                        <a th:href="@{/user/carrinho/comprar}" class="btn btn-success btn-lg btn-block">
+                            <i class="fa fa-shopping-bag"></i> Finalizar pedido
+                         </a>
+                    </div>
                 </aside>
             </div>
 

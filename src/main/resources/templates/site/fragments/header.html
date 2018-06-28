@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="pt" 
-  xmlns="http://www.w3.org/1999/xhtml" 
-  xmlns:th="http://www.thymeleaf.org"
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:th="http://www.thymeleaf.org" 
   xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <header th:fragment="header">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -26,7 +25,7 @@
             </a>
           </li>
           <li class="nav-item livro-color">
-            <a class="nav-link" th:href="@{/celulares}">Celulares</a>
+            <a class="nav-link" th:href="@{/produtos}">Celulares</a>
           </li>
           <li class="nav-item autor-color">
             <a class="nav-link" th:href="@{/sobre}">Sobre</a>
@@ -36,22 +35,39 @@
           </li>
         </ul>
 
-        <div sec:authorize="isAuthenticated()"> 
-            <div class="icontext text-white">
-                <div class="icon-wrap"><i class="icon-sm round border border-white text-white fa fa-user"></i></div>
-                <div class="text-wrap dropdown">
-                  <a href="#" class="text-white" data-toggle="dropdown" data-offset="20,10" aria-expanded="false"> 
-                    [[${#authentication.principal.usuario.nome}]] <i class="fa fa-caret-down"></i> 
+        <div sec:authorize="isAuthenticated()">
+          <div class="icontext text-white">
+            <div class="icon-wrap">
+              <i class="icon-sm round border border-white text-white fa fa-user"></i>
+            </div>
+            <div class="text-wrap dropdown">
+              <a href="#" class="text-white" data-toggle="dropdown" data-offset="20,10" aria-expanded="false">
+                [[${#authentication.getPrincipal().getNome()}]]
+                <i class="fa fa-caret-down"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" style="position: absolute; top: 35px; left: -35px;" x-placement="bottom-end">
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                  <a class="dropdown-item" th:href="@{/admin}">
+                    <i class="fa fa-user-tie"></i> Painel Admin
                   </a>
-                  <div class="dropdown-menu dropdown-menu-right" style="position: absolute; top: 35px; left: -35px;" x-placement="bottom-end">
-                      <a class="dropdown-item" th:href="@{/user/compras}"><i class="fa fa-shopping-bag"></i> Compras</a>  
-                      <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" th:href="@{/logout}"><i class="fa fa-sign-out-alt"></i> Sair</a>
-                  </div>
+                  <div class="dropdown-divider"></div>
                 </div>
+                <div sec:authorize="hasRole('ROLE_USER')">
+                  <a class="dropdown-item" th:href="@{/user/compras}">
+                    <i class="fa fa-shopping-bag"></i> Compras</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" th:href="@{/user/perfil}">
+                    <i class="fa fa-user-edit"></i> Meu Perfil
+                  </a>
+                  <div class="dropdown-divider"></div>
+                </div>
+                <a class="dropdown-item" th:href="@{/logout}">
+                  <i class="fa fa-sign-out-alt"></i> Sair</a>
               </div>
-        </div> 
-    
+            </div>
+          </div>
+        </div>
+
         <div sec:authorize="isAnonymous()">
           <span class="text-white mr-3">
             <a class="btn btn-outline-info text-white" th:href="@{/login}">
@@ -67,10 +83,11 @@
               <i class="fa fa-shopping-cart"></i>
             </div>
           </div>
-          <span class="badge badge-pill badge-danger notify" id="total-itens-carrinho">10</span>
+          <span class="badge badge-pill badge-danger notify" id="total-itens-carrinho">[[${carrinho.getQuantidade()}]]</span>
         </a>
       </div>
     </div>
   </nav>
 </header>
+
 </html>

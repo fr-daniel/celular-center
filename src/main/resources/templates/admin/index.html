@@ -7,7 +7,6 @@
 </head>
 <body>
 <div layout:fragment="content">
-
   <div class="container">
     <div class="row mt-3">
       <div class="col-md-3">
@@ -20,11 +19,74 @@
           </ol>
         </nav>
 
-        <!--Conteúdo-->
+        <div class="row">
+          <div class="col-md-6">
+            <article class="box">
+              <figure class="itemside">
+                <div class="aside align-self-center">
+                  <span class="icon-wrap icon-md round bg-warning">
+                    <i class="fa fa-users white"></i>
+                  </span>
+                </div>
+                <figcaption class="text-wrap">
+                  <h5 class="title">Usuários</h5>
+                  <p class="text-muted">[[${total_usuarios}]] usuários cadastrados </p>
+                </figcaption>
+              </figure>
+            </article>
+          </div>
+          <div class="col-md-6">
+            <article class="box">
+              <figure class="itemside">
+                <div class="aside align-self-center">
+                  <span class="icon-wrap icon-md round bg-danger">
+                    <i class="fa fa-list-alt white"></i>
+                  </span>
+                </div>
+                <figcaption class="text-wrap">
+                  <h5 class="title">Produtos</h5>
+                  <p class="text-muted">[[${total_produtos}]] produtos cadastrados</p>
+                </figcaption>
+              </figure>
+            </article>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-6">
+            <article class="box">
+              <figure class="itemside">
+                <div class="aside align-self-center">
+                  <span class="icon-wrap icon-md round bg-info">
+                    <i class="fa fa-shopping-bag white"></i>
+                  </span>
+                </div>
+                <figcaption class="text-wrap">
+                  <h5 class="title">Compras</h5>
+                  <p class="text-muted">[[${total_compras}]] compras realizadas </p>
+                </figcaption>
+              </figure>
+            </article>
+          </div>
+          <div class="col-md-6">
+            <article class="box">
+              <figure class="itemside">
+                <div class="aside align-self-center">
+                  <span class="icon-wrap icon-md round bg-green">
+                    <i class="fa fa-eye white"></i>
+                  </span>
+                </div>
+                <figcaption class="text-wrap">
+                  <h5 class="title">Visitas</h5>
+                  <p class="text-muted">2 visitas</p>
+                </figcaption>
+              </figure>
+            </article>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-      
 </div>
 </body>
 </html>

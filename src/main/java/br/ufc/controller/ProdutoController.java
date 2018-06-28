@@ -23,6 +23,20 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
+    @GetMapping("/produtos")
+    public ModelAndView list() {
+        ModelAndView mv = new ModelAndView("site/produtos/list");
+        mv.addObject("produtos", produtoService.buscarAll());
+        return mv;
+    }
+
+    @GetMapping("/produto/{id}")
+    public ModelAndView produto(@PathVariable("id") Produto produto) {
+        ModelAndView mv = new ModelAndView("site/produtos/produto");
+        mv.addObject("produto", produto);
+        return mv;
+    }
+
     @GetMapping("/admin/produtos")
     public ModelAndView produtos() {
         ModelAndView mv = new ModelAndView("admin/produtos/list");
@@ -42,14 +56,16 @@ public class ProdutoController {
         if(result.hasErrors())
             return add(produto);
 
-        //Corrigir erros
+        String mensagem = produto.getId() == null ? "Produto adicionado com sucesso!" : "Produto atualizado com sucesso!";
+
         try {
-             produtoService.salvar(produto, imagem);
+            produtoService.salvar(produto, imagem);           
         } catch(StorageException e) {
             produtoService.atualizar(produto);
         }
+
+        attributes.addFlashAttribute("mensagem", mensagem);
             
-        attributes.addFlashAttribute("mensagem", "Produto adicionado com sucesso!");
         return new ModelAndView("redirect:/admin/produtos");
     }
 
@@ -58,4 +74,15 @@ public class ProdutoController {
        return add(produto);
     }
     
+    @GetMapping("/admin/produtos/delete/{id}")
+    public String remover(@PathVariable("id") Produto produto, RedirectAttributes attributes) {
+       
+        if(produto != null) {
+            produtoService.deletar(produto);
+        }
+
+        attributes.addFlashAttribute("mensagem", "Produto deletado com sucesso");
+
+        return "redirect:/admin/produtos";
+    }
 }

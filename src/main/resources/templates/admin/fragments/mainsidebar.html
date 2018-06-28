@@ -10,13 +10,16 @@
             </header>
             <div class="filter-content">
                 <div class="list-group list-group-flush">
+                    <a th:href="@{/admin}" class="list-group-item">
+                        <i class="fa fa-tachometer-alt"></i> Painel
+                    </a>
                     <a th:href="@{/admin/produtos}" class="list-group-item">
                         <i class="fa fa-list-alt"></i> Produtos
                     </a>
                     <a th:href="@{/admin/produtos/add}" class="list-group-item">
                         <i class="fa fa-edit"></i> Adicionar Produtos </a>
-                    <a th:href="@{/admin/pedidos}" class="list-group-item">
-                        <i class="fa fa-shopping-bag"></i> Pedidos
+                    <a th:href="@{/admin/compras}" class="list-group-item">
+                        <i class="fa fa-shopping-bag"></i> Compras
                     </a>
                     <a th:href="@{/admin/usuarios}" class="list-group-item">
                         <i class="fa fa-users"></i> Usuários

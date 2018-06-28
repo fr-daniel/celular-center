@@ -1,6 +1,5 @@
 package br.ufc.model;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,27 +10,40 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "pedidos")
-public class Pedido {
+@Table(name = "compras")
+public class Compra {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany
-	@JoinTable(name = "pedido_produto", joinColumns = @JoinColumn(name = "pedido_id"),
+    @ManyToMany
+	@JoinTable(name = "compra_produto", joinColumns = @JoinColumn(name = "compra_id"),
 	inverseJoinColumns = @JoinColumn(name = "produto_id"))
     private List<Produto> produtos;
 
     @Column(name = "created", nullable = false)
 	private LocalDateTime created;
+
+	@ManyToOne
+	@JoinTable(name = "compra_usuario", joinColumns = @JoinColumn(name="codigo_compra"), 
+	inverseJoinColumns = @JoinColumn(name = "codigo_usuario"))
+	private Usuario usuario;
 	
-	private BigDecimal total;
+	private Double total;
+
+	public Compra() {}
+
+	public Compra(List<Produto> produtos, Usuario usuario) {
+		this.produtos = produtos;
+		this.usuario = usuario;
+	}
 
     @PrePersist
     protected void onCreate() {
@@ -62,19 +74,31 @@ public class Pedido {
 	public void setCreated(LocalDateTime created) {
 		this.created = created;
 	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
 
-	public BigDecimal getTotal() {
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Double getTotal() {
 		return this.total;
 	}
 
-	public void setTotal(BigDecimal total) {
+	public void setTotal(Double total) {
 		this.total = total;
 	}	
 	
-	public BigDecimal calcularValorTotal() {
-		BigDecimal total = BigDecimal.ZERO;
-		produtos.forEach(produto -> total.add(produto.getPreco()));
+	public Double calcularValorTotal() {
+		this.total = new Double(0);
+		produtos.forEach(produto -> total += produto.getPreco().doubleValue());
 		return total;
+	}
+
+	public Integer getQuantidadeProdutos() {
+		return produtos.size();
 	}
 	
 	@Override
@@ -93,7 +117,7 @@ public class Pedido {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pedido other = (Pedido) obj;
+		Compra other = (Compra) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

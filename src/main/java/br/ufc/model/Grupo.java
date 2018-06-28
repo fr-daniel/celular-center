@@ -58,6 +58,11 @@ public class Grupo implements GrantedAuthority {
 	}
 
 	@Override
+	public String getAuthority() {
+		return this.codigo;
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -80,10 +85,5 @@ public class Grupo implements GrantedAuthority {
 		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String getAuthority() {
-		return this.codigo;
 	}
 }

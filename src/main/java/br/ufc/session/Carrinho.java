@@ -36,4 +36,8 @@ public class Carrinho {
     public Integer getQuantidade() {
         return produtos.size();
     }
+
+    public void limpar() {
+        this.produtos.clear();
+    }
 }

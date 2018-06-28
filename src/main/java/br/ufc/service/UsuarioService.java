@@ -22,28 +22,30 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @Autowired GrupoRepository grupoRepository;
+    @Autowired 
+    private GrupoRepository grupoRepository;
 
     @Autowired 
     private PasswordEncoder passwordEncoder;
 
     public Usuario buscarPorEmail(String email) {
-        return usuarioRepository.findByEmail(email).get();
+        return usuarioRepository.findByEmail(email);
     }
 
     public Usuario salvar(Usuario usuario) throws EmailUsuarioJaCadastradoException, CpfUsuarioJaCadastradoException {   
-        Optional<Usuario> usuarioEmailExistente = usuarioRepository.findByEmail(usuario.getEmail());
+        Optional<Usuario> usuarioEmailExistente = Optional.ofNullable(usuarioRepository.findByEmail(usuario.getEmail()));
        
-		if (usuarioEmailExistente.isPresent())
+		if (usuarioEmailExistente.isPresent() && !usuario.getEmail().equals(usuarioEmailExistente.get().getEmail()))
             throw new EmailUsuarioJaCadastradoException("E-mail já cadastrado");
             
         String cpf = new CPFFormatter().unformat(usuario.getCpf());
         Optional<Usuario> usuarioCpfExistente = usuarioRepository.findByCpf(cpf);
         
-        if (usuarioCpfExistente.isPresent())
+        if (usuarioCpfExistente.isPresent() && !usuario.getCpf().equals(usuarioCpfExistente.get().getCpf()))
 			throw new CpfUsuarioJaCadastradoException("CPF já cadastrado");
-		
-		usuario.setSenha(this.passwordEncoder.encode(usuario.getSenha()));
+        
+        if(usuario.getSenha() != null)
+		    usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         
         Grupo userRole = grupoRepository.findByCodigoIgnoreCase("ROLE_USER").get();
         usuario.setGrupos(Arrays.asList(userRole));
@@ -55,4 +57,7 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
     
+    public Long total() {
+        return usuarioRepository.count();
+    }
 }

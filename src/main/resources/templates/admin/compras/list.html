@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
+<html 
+    xmlns:th="http://www.thymeleaf.org" 
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-    layout:decorate="~{/admin/layout}">
+	layout:decorate="~{admin/layout}">
 <head>
-    <title>Usuários</title>
+    <title>Compras</title>
 </head>
 <body>
-
 <div layout:fragment="content">
     <div class="container-fluid">
         <div class="row mt-3">
@@ -22,35 +22,34 @@
                         <li class="breadcrumb-item active" aria-current="page">Lista de Produtos</li>
                     </ol>
                 </nav>
-                <th:block th:replace="admin/fragments/mensagem-sucesso :: mensagemSucesso"></th:block>
                 <div class="table-responsive  bw-tabela-simples">
                     <table class="table  table-hover">
                         <thead>
                             <tr>
                                 <th>Código</th>
-                                <th>Nome</th>
-                                <th>CPF</th>
-                                <th>Email</th>
-                                <th>Data Nascimento</th>
+                                <th>Quantidade de Produtos</th>
+                                <th>Valor Total</th>
+                                <th>Usuário</th>
+                                <th>Data e Hora</th>
                                 <th class="table-col-acoes"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="usuario : ${usuarios}">
-                                <td th:text="${usuario.codigo}"></td>
-                                <td th:text="${usuario.nome}"></td>
-                                <td th:text="${usuario.cpf}"></td>
-                                <td th:text="${usuario.email}"></td>
-                                <td>[[${#temporals.format(usuario.dataNascimento, 'dd/MM/yyyy')}]]</td>
+                            <tr th:each="compra : ${compras}">
+                                <td th:text="${compra.id}"></td>
+                                <td th:text="${compra.quantidadeProdutos}"></td>
+                                <td>R$ [[${#numbers.formatDecimal(compra.total, 0, 'POINT', 2, 'COMMA')}]]</td>
+                                <td>[[${compra.usuario.nome}]]</td>
+                                <td>[[${#temporals.format(compra.created, 'dd/MM/yyyy - HH:mm')}]]</td>
 
                                 <td class="text-center">
-                                    <a class="btn  btn-link  btn-xs" title="Editar" th:if="${usuario.codigo} != ${#authentication.getPrincipal().getCodigo()}" th:href="@{/admin/usuarios/{codigo}(codigo=${usuario.codigo})}">
-                                        <i class="fa fa-edit"></i>
+                                    <a class="btn  btn-outline-info btn-sm" th:href="@{/admin/compras/{codigo}(codigo=${compra.id})}">
+                                        <i class="fa fa-eye"></i> Ver detalhes
                                     </a>
                                 </td>
                             </tr>
-                            <tr th:if="${#lists.isEmpty(usuarios)}">
-                                <td colspan="6">Nenhum usuário encontrado!</td>
+                            <tr th:if="${#lists.isEmpty(compras)}">
+                                <td colspan="6">Nenhum compra realizada!</td>
                             </tr>
                         </tbody>
                     </table>
@@ -58,5 +57,5 @@
             </div>
         </div>
     </div>
-    </body>
+</body>
 </html>

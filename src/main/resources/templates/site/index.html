@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html 
-	xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	layout:decorate="~{site/layout}">
 <head>
     <title>Home</title>
@@ -31,7 +33,6 @@
 			</div>
 		</div>
 	</div>
-
 	<section class="section-content">
 		<div class="container">
 			<h4 class="title-text">Produtos em Destaque</h4>
@@ -46,7 +47,9 @@
 									</div>
 								</aside>
 								<article class="col-sm-6">
-									<h4 class="title" th:text="${produto.nome}"></h4>
+									<a th:href="@{/produto/{id}(id = ${produto.id})}">
+										<h4 class="title" th:text="${produto.nome}"></h4>
+									</a>
 									<div class="rating-wrap  mb-2">
 										<ul class="rating-stars">
 											<li style="width:80%" class="stars-active">
@@ -75,9 +78,18 @@
 										</div>
 										<br>
 										<p>
+											
+											<div sec:authorize="isAnonymous()">
+												<a th:href="@{/carrinho/add/{id}(id = ${produto.id})}" class="btn btn-primary btn-block">
+													<i class="fa fa-shopping-cart"></i> Adicionar ao carrinho
+												</a>
+												<br/>
+											</div>
+											<div sec:authorize="hasRole('ROLE_USER')">
 											<a th:href="@{/carrinho/add/{id}(id = ${produto.id})}" class="btn btn-primary btn-block">
 												<i class="fa fa-shopping-cart"></i> Adicionar ao carrinho </a>
 											<br>
+											</div>
 											<a th:href="@{/produto/{id}(id = ${produto.id})}" class="btn btn-secondary btn-block">
 												<i class="fa fa-eye"></i> Detalhes</a>
 										</p>
@@ -95,7 +107,7 @@
 			</div>
 
 			<div class="text-center" th:if="${not #lists.isEmpty(new_produtos)}">
-				<a href="" class="btn btn-lg btn-outline-info">
+				<a th:href="@{/produtos}" class="btn btn-lg btn-outline-info">
 					<i class="fa fa-plus-circle"></i> Carregar mais produtos
 				</a>
 			</div>

@@ -1,14 +1,11 @@
 package br.ufc.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 @Entity
@@ -22,14 +19,6 @@ public class Produto {
     private String imagem;
     private BigDecimal preco;
 	private Short quantidadeEstoque;
-	
-	@Column(name = "created", nullable = false)
-	private LocalDateTime created;
-
-    @PrePersist
-    protected void onCreate() {
-		created = LocalDateTime.now();
-    }
 
     public Long getId() {
         return id;
@@ -71,14 +60,6 @@ public class Produto {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
 
-	public LocalDateTime getCreated() {
-		return created;
-	}
-
-	public void setCreated(LocalDateTime created) {
-		this.created = created;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -103,6 +84,5 @@ public class Produto {
 			return false;
 		return true;
 	}
-    
     
 }

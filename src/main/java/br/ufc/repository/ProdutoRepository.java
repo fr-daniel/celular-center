@@ -8,6 +8,6 @@ import br.ufc.model.Produto;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
-    List<Produto> findTop10ByOrderByCreatedDesc();
+    List<Produto> findTop10ByOrderByIdDesc();
     
 }
